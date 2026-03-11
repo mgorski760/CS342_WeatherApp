@@ -4,7 +4,7 @@ import Navbar from '../components/Navbar'
 function Homepage(){
     return(
         <>
-          <div className ="min-h-screen bg-gray-900">
+          <div className ="min-h-screen bg-black">
             <Navbar/>
             <ai_advisor_card/>
 
