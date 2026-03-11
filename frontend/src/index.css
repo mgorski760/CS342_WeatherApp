@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/*Required to ensure that our background DOES NOT bleed white during scrolling.*/
+html, body, #root {
+    background-color: theme('colors.gray.900');
+    overflow-x: hidden;
+}
