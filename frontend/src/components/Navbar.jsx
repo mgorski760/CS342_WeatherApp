@@ -9,10 +9,15 @@ function Navbar({city, setCity}) {
     //This will be really useful for to determine api calls.
     const [inputCity, setInputCity] = useState('')
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        console.log(`${city} has been inputted into the input within Navbar`)
         setCity(inputCity)
+        try {
+            const response = await fetch(`http://localhost:8080/weather/${inputCity}`)
+            const data = await response.text()
+        } catch (error) {
+            console.error("Error Fetching city: ", error)
+        }
     }
 
     return (

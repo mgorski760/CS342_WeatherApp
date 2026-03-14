@@ -16,7 +16,7 @@ function Homepage(){
                 <AiCard city={city}/>
             </div>
             <div className='pt-10 pb-10 h-full'>
-                <MainCard/>
+                <MainCard city={city || "Chicago"} setCity={setCity}/>
             </div>
           </div>
           <Footer/>

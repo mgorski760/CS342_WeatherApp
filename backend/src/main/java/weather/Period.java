@@ -17,4 +17,7 @@ public class Period{
     public String icon;
     public String shortForecast;
     public String detailedForecast;
+    public int day; // day weather forecast
+    public int night; // night weather forecast
+
 }
