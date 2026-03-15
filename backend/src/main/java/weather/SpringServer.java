@@ -14,7 +14,7 @@ HOW TO RUN:
     To start the server, enter into terminal: mvn spring-boot:run
     It should be within localhost:8080 by default.
 
-    LINK: http://localhost:8080/test
+    LINK: http://localhost:8080
  */
 
 @SpringBootApplication
