@@ -3,9 +3,9 @@ weather/SpringServer.class
 weather/Properties.class
 weather/Geometry.class
 MyWeatherAPI.class
+weather/WeatherController.class
 weather/Period.class
 weather/Elevation.class
 weather/WeatherAPI.class
 JavaFX.class
 weather/ProbabilityOfPrecipitation.class
-weather/TestController.class
