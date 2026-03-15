@@ -28,16 +28,23 @@ public class WeatherController {
         List features = (List) response.get("features");
 
         if(features == null || features.isEmpty()){
-            return null;
+            return new ArrayList<>();
         }
 
         // then we go into nested maps to get the geometry field
         Map geometry = (Map) ((Map) features.get(0)).get("geometry");
+        if(geometry == null) {
+            return new ArrayList<>();
+        }
 
         // go to the list where the coords are then get the coords
         List<Double> coordinates = (List<Double>) geometry.get("coordinates");
+        if(coordinates == null || coordinates.size() < 2){
+            return new ArrayList<>();
+        }
         double longitude = coordinates.get(0);
         double latitude = coordinates.get(1);
+
 
         //now we use the lat and long to get the region, gridx, and gridy
         String convertToGrids = "https://api.weather.gov/points/" + latitude + "," + longitude;
@@ -45,6 +52,9 @@ public class WeatherController {
 
         // go find map properties
         Map<String, Object> properties = (Map<String, Object>) gridResponse.get("properties");
+        if(properties == null) {
+            return new ArrayList<>();
+        }
         // find the region in properties as well as the gridX and gridY
         String region = (String) properties.get("gridId");
         int gridX = (int) properties.get("gridX");
