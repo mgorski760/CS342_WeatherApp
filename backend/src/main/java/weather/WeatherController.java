@@ -48,7 +48,7 @@ public class WeatherController {
 
         //now we use the lat and long to get the region, gridx, and gridy
         String convertToGrids = "https://api.weather.gov/points/" + latitude + "," + longitude;
-        Map<String, Object> gridResponse = restTemplate.getForObject(convertToGrids, Map.class);
+        Map<String, Object> gridResponse = restTemplate.getForObject(convertToGrids, Map.class); // used to call APi's from Java (HTTP requests)
 
         // go find map properties
         Map<String, Object> properties = (Map<String, Object>) gridResponse.get("properties");
