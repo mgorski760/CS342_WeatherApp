@@ -1,3 +1,6 @@
+
+//STARTER CODE. REDUNDENT SINCE WE ARE USING SPRINGBOOT.
+
 package weather;
 
 import java.net.URI;
