@@ -58,6 +58,7 @@ function MainCard({city, setCity}) {
                                 <img src={period.icon} className='w-9 h-8 object-cover rounded'></img>
                                 <span>{period.name}</span>
                                 <span>Day: {period.day}°{period.temperatureUnit} | Night: {period.night}°{period.temperatureUnit}</span>
+
                            </div>
                         ))
                     )}

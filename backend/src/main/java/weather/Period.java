@@ -19,5 +19,7 @@ public class Period{
     public String detailedForecast;
     public int day; // day weather forecast
     public int night; // night weather forecast
+    public double longitude;
+    public double latitude;
 
 }
