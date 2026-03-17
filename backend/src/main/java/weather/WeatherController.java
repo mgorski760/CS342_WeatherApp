@@ -92,8 +92,6 @@ public class WeatherController {
      * a structured JSON response.</p>
      *
      * @param city          the name of the city to get a recommendation for (e.g. "Chicago")
-     * @param clientDateTime the client's current date/time in ISO-8601 format (e.g. "2026-03-14T22:15:00.000Z")
-     * @param timeZone      the client's IANA timezone string (e.g. "America/Chicago")
      * @return JSON with three keys:
      *         <ul>
      *           <li>{@code summary} — overall weather summary for today</li>
