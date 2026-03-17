@@ -103,8 +103,7 @@ public class WeatherController {
      */
 
     @GetMapping("/getrecommendation/{city}")
-    public Map<String, String> getRecommendation(@PathVariable String city
-                                                 ) {
+    public Map<String, String> getRecommendation(@PathVariable String city) {
 
         //TODO:
         /*

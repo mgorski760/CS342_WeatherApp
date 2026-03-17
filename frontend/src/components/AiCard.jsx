@@ -1,6 +1,8 @@
 
 
 function AiCard({city}){
+
+    
     return(
         <>
             <div className="border-4 border-gray-800 w-3/6 bg-gray-700 mx-auto text-white rounded-lg p-2">
