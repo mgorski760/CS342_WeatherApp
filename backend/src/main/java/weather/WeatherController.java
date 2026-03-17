@@ -44,9 +44,9 @@ public class WeatherController {
         if(coordinates == null || coordinates.size() < 2){
             return new ArrayList<>();
         }
+
         double longitude = coordinates.get(0);
         double latitude = coordinates.get(1);
-
 
         //now we use the lat and long to get the region, gridx, and gridy
         String convertToGrids = "https://api.weather.gov/points/" + latitude + "," + longitude;
@@ -64,6 +64,11 @@ public class WeatherController {
 
         // send this info the api we are given
         ArrayList<Period> forecast = WeatherAPI.getForecast(region, gridX, gridY);
+
+        // pass this to period variables because we need it for the windy weather radar, now we can access cords for all cities
+        forecast.get(0).longitude = longitude;
+        forecast.get(0).latitude = latitude;
+
         ArrayList<Period> sevenDayForecast = new ArrayList<>();
 
         // get json data for the day and night forecast
