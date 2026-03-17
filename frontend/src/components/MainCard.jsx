@@ -6,16 +6,22 @@ function MainCard({city, setCity}) {
 
     const [weather, setWeather] = useState([]);
     const [dayPicked, setDayPicked] = useState(null);
+    const [loading, setLoading] = useState(false);
 
-    if(!city) {
-        return;
-    }
+    useEffect(() => {
+        if(!city) {
+            setCity("Chicago");
+        }
+    }, [city]);
+
     // fetch the data from the backend and store it in the weather variable
     useEffect(() => {
+        setLoading(true);
         fetch(`http://localhost:8080/weather/${city}`)
         .then(res => res.json())
         .then(data => {
-            setWeather(data);
+            setWeather(Array.isArray(data) ? data : []);
+            setLoading(false);
         });
     }, [city]);
 
@@ -23,16 +29,19 @@ function MainCard({city, setCity}) {
         <div className='border-4 border-gray-800 w-3/6 h-[500px] bg-gray-700 mx-auto text-white rounded-lg p-2'>
             <div className='flex flex-col md:flex-row sm:w-full h-full gap-2'>
                 <div className='border-4 border-gray-800 sm:w-full md:w-3/6 h-full bg-gray-800 flex flex-col gap-4 p-2'>
-                    {weather.length === 0 ? (
-                        city = 'Chicago'
+                    {loading ? (
+                        <p className='text-center animate-pulse'>Loading weather data...</p>
+                    ) : weather.length === 0 ? (
+                        <p className='text-center text-gray-400'>City not found. Try another search.</p>
                     ) : (
                         weather.map((period, index) => (
                             <div
                             key={index}
                             className=" cursor-pointer text-white flex flex-row justify-between border border-gray-700 rounded-l p-2 bg-gray-700 hover:bg-gray-800 transition ease-out duration-700"
                             onClick={() => setDayPicked(period)}>
+                                <img src={period.icon} className='w-9 h-8 object-cover rounded-3xl'></img>
                                 <span>{period.name}</span>
-                                <span>High: {period.day}°{period.temperatureUnit} | Low: {period.night}°{period.temperatureUnit}</span>
+                                <span>Day: {period.day}°{period.temperatureUnit} | Night: {period.night}°{period.temperatureUnit}</span>
                            </div>
                         ))
                     )}
@@ -41,11 +50,13 @@ function MainCard({city, setCity}) {
                 <div className='flex flex-col w-full md:w-1/2 gap-2'>
                     <div className='border-4 border-gray-800 h-1/2 bg-gray-800 flex flex-row'>
                         {dayPicked ? (
-                            <div className=''>
+                            <div className='text-xs'>
                                 <h2 className='text-xl font-bold'>{dayPicked.name}</h2>
                                 <p>Forecast: {dayPicked.shortForecast}</p>
                                 <p>Wind speed: {dayPicked.windSpeed}</p>
                                 <p>Wind direction: {dayPicked.windDirection}</p>
+                                <h2 className='pt-2 text-xl font-bold'>Detailed forecast</h2>
+                                <span className='text-xs'>{dayPicked.detailedForecast}</span>
                             </div>
                         ) : (
                             <p>Select a day</p>

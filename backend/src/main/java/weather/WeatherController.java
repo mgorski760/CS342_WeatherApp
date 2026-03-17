@@ -29,24 +29,34 @@ public class WeatherController {
         // Go into the list to access features
         List features = (List) response.get("features");
 
-        if (features == null || features.isEmpty()) {
-            return null;
+        if(features == null || features.isEmpty()){
+            return new ArrayList<>();
         }
 
         // then we go into nested maps to get the geometry field
         Map geometry = (Map) ((Map) features.get(0)).get("geometry");
+        if(geometry == null) {
+            return new ArrayList<>();
+        }
 
         // go to the list where the coords are then get the coords
         List<Double> coordinates = (List<Double>) geometry.get("coordinates");
+        if(coordinates == null || coordinates.size() < 2){
+            return new ArrayList<>();
+        }
         double longitude = coordinates.get(0);
         double latitude = coordinates.get(1);
 
+
         //now we use the lat and long to get the region, gridx, and gridy
         String convertToGrids = "https://api.weather.gov/points/" + latitude + "," + longitude;
-        Map<String, Object> gridResponse = restTemplate.getForObject(convertToGrids, Map.class);
+        Map<String, Object> gridResponse = restTemplate.getForObject(convertToGrids, Map.class); // used to call APi's from Java (HTTP requests)
 
         // go find map properties
         Map<String, Object> properties = (Map<String, Object>) gridResponse.get("properties");
+        if(properties == null) {
+            return new ArrayList<>();
+        }
         // find the region in properties as well as the gridX and gridY
         String region = (String) properties.get("gridId");
         int gridX = (int) properties.get("gridX");
@@ -57,15 +67,15 @@ public class WeatherController {
         ArrayList<Period> sevenDayForecast = new ArrayList<>();
 
         // get json data for the day and night forecast
-        for (int i = 0; i < forecast.size() && sevenDayForecast.size() < 7; i++) {
+        for(int i = 0; i < forecast.size() && sevenDayForecast.size() < 7; i++){
             Period day = forecast.get(i);
 
             // day temps
-            if (day.isDaytime) {
+            if(day.isDaytime){
                 day.day = day.temperature;
 
                 // (i+1) is night temps
-                if ((i + 1) < forecast.size()) { // check if we aren't going out of bounds
+                if((i + 1) < forecast.size()){ // check if we aren't going out of bounds
                     day.night = forecast.get(i + 1).temperature;
                 }
                 sevenDayForecast.add(day);

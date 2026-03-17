@@ -12,12 +12,6 @@ function Navbar({city, setCity}) {
     const handleSubmit = async (e) => {
         e.preventDefault()
         setCity(inputCity)
-        try {
-            const response = await fetch(`http://localhost:8080/weather/${inputCity}`)
-            const data = await response.text()
-        } catch (error) {
-            console.error("Error Fetching city: ", error)
-        }
     }
 
     return (
