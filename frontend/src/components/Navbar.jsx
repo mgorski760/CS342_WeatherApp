@@ -20,7 +20,7 @@ function Navbar({city, setCity}) {
                 <div className='border-none border-gray-700 rounded-full ml-5 mr-5 py-2 px-3 sm:px-6 md:px-10 lg:px-20 flex flex-wrap items-center justify-center gap-8 max-w-5xl'>
                     <h1 className='font-bold underline underline-offset-4 decoration-4 decoration-green-500 transition ease-out duration-700'>Weather Project</h1>
                     <Link className='hover:underline hover:underline-offset-4 hover:decoration-4 hover:decoration-blue-500 transition ease-out duration-700' to="/">Home</Link>
-                    <Link className='hover:underline hover:underline-offset-4 hover:decoration-4 hover:decoration-blue-500 transition ease-out duration-700' to="/">Radar</Link>
+                    <Link className='hover:underline hover:underline-offset-4 hover:decoration-4 hover:decoration-blue-500 transition ease-out duration-700' to="/radar">Radar</Link>
 
                     <form onSubmit={handleSubmit}>
                         <div className='flex justify-center space-x-2 w-full sm:w-auto'>
