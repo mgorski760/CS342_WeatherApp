@@ -1,14 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 
-function RadarCard({city, setCity}){
-    //Assume that this card hasn't been rerendered.
+function RadarCard({city, lat, setLat, lon, setLon}){
+    
     const didInit = useRef(false);
     const windyRef = useRef(null);
-    const [lat, setLat] = useState(50.4);
-    const [lon, setLon] = useState(14.3);
-
-    //chi lat lon
-
+   
 
     useEffect(() =>{
         if (didInit.current){
@@ -43,9 +39,8 @@ function RadarCard({city, setCity}){
         };
     },[]);
 
-    //update the lat and long based on user input.
+    //update the lat and long based on user input in navbar.
     useEffect(() => {
-        if(!windyRef.current || !city){ return }
         console.log(city);
         console.log("City updated. Changing positioning.");
 
@@ -74,7 +69,7 @@ function RadarCard({city, setCity}){
     
     return(
         <>
-            <div className="border-4 border-gray-800 w-5/6 h-[700px] bg-gray-700 mx-auto text-white rounded-lg p-2">
+            <div className="border-4 border-gray-800 w-5/6 h-[650px] bg-gray-700 mx-auto text-white rounded-lg p-2">
                 <div id="windy" className="w-full h-full"></div>
             </div>
         </>
