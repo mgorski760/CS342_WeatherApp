@@ -6,7 +6,7 @@ import MainCard from '../components/MainCard';
 
 function Homepage(){
 
-    const [city, setCity] = useState("");
+    const [city, setCity] = useState("Chicago");
     
 
     return(
@@ -16,7 +16,7 @@ function Homepage(){
             <div className="max-w-5/6">
                 <AiCard city={city}/>
             </div>
-            <div className='pt-10 pb-10 h-full'>
+            <div className='pt-2 pb-10 h-full'>
                 <MainCard city={city || "Chicago"} setCity={setCity}/>
             </div>
           </div>

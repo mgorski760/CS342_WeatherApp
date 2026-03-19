@@ -5,7 +5,7 @@ import RadarInfo from '../components/RadarInfo'
 
 function Radar(){
 
-    const [city, setCity] = useState("");
+    const [city, setCity] = useState("Chicago");
     const [lat, setLat] = useState(0);
     const [lon, setLon] = useState(0);
 

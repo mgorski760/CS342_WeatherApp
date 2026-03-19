@@ -108,12 +108,6 @@ public class WeatherController {
     @GetMapping("/getrecommendation/{city}")
     public Map<String, String> getRecommendation(@PathVariable String city) {
 
-        //TODO:
-        /*
-            Need getCords function to take in client's current date+time so that the
-            LLM can have weather context for the specific day.
-        */
-
         RestTemplate restTemplate = new RestTemplate();
 
         //Build Weather context (Currently next 5 days);
@@ -123,24 +117,25 @@ public class WeatherController {
         if(forecast == null || forecast.isEmpty()){
             return Map.of(
                 "summary", "Failed to get weather data for " + city,
-                "advice", "No dress info available.",
-                "risks", "Better hope you're aren't cooked since the LLM failed."
+                "top", "",
+                "bottom", "",
+                "feet", ""
             );
         }
         System.out.println("Got data for " + city);
         //Convert JSON to a Java Map
         ObjectMapper objectMapper = new ObjectMapper();
 
-        //Weather context.
         String forecastJson;
 
         try {
-            forecastJson = objectMapper.writeValueAsString(forecast);
+            forecastJson = objectMapper.writeValueAsString(forecast.get(0));
         } catch (Exception e){
             return Map.of(
-                "summary", "Failed to convert Weather info due to internal server error.",
-                "advice", "No dress recomendation since the API failed :-(",
-                "risk", "Better hope you're aren't cooked since the LLM failed."
+                "summary", "Failed to get current day's weather.",
+                "top", "",
+                "bottom", "",
+                "feet", ""
             );
         }
 
@@ -149,13 +144,30 @@ public class WeatherController {
 
         //Multi modal context for our llm
         String prompt =
-            "You are a weather assistant. " +
-            "Given the forecast JSON for city " + city + ", " +
-            "you can ONLY return valid json in these keys: summary, advices, risk. " +
-            "Keep each value to 1-2 sentence. \n\n" +
-            "EXAMPLE: {summary: \"The weather today is overall sunny and warm ☀️\"" +
-                    ", advice: \"Wear a t-shirt and long space since the temps will drop in the evening.\"" +
-                    ", risk: \"Wear sunscreen!\"}" +
+            "You are a weather outfit recommender for a React app.\n" +
+            "\n" + 
+            "Your output is used to select clothing images by key.\n" +
+            "Allowed keys are:\n" + 
+            "\n" + 
+            "TOP: \"shirt\" | \"hoodie\" | \"jacket\"\n" + 
+            "BOTTOM: \"pants\" | \"shorts\"\n" + 
+            "FEET: \"shoes\" | \"boots\"\n" + 
+            "\n" + 
+            "Rules:\n" + 
+            "- Pick exactly 1 key for top, bottom, feet.\n" +
+            "- Use only lowercase keys from the allowed list.\n" + 
+            "- Do not invent new keys.\n" + 
+            "- If conditions are cold/windy/rainy/snowy, prefer \"jacket\", \"pants\", \"boots\".\n" + 
+            "- If conditions are warm/hot and dry, prefer \"shirt\", \"shorts\", \"shoes\".\n" + 
+            "- \"summary\" should be 1-3 short sentences (max 300 words), user-friendly, please include any potential risks regarding weather conditions.\n" +
+            "\n" + 
+            "Return ONLY valid JSON in this exact shape:\n" + //
+            "{\n" + 
+            "  \"summary\": \"string\",\n" + //
+            "  \"top\": \"shirt|hoodie|jacket\",\n" + //
+            "  \"bottom\": \"pants|shorts\",\n" + //
+            "  \"feet\": \"shoes|boots\"\n" + //
+            "}" +
             "\n\nForecast JSON:\n" + forecastJson;
 
         //Define type of HTTP request.
@@ -179,9 +191,10 @@ public class WeatherController {
         //LLM Sanity check.
         if (response == null || response.get("choices") == null) {
             return Map.of(
-                    "summary", "LLM response was empty",
-                    "advice", "Try again shortly",
-                    "risk", "Unknown"
+                   "summary", "Agent failed to get correct JSON data.",
+                    "top", "",
+                    "bottom", "",
+                    "feet", ""
             );
         }
 
@@ -197,14 +210,16 @@ public class WeatherController {
             Map<String, String> parsed = objectMapper.readValue(content, Map.class);
             return Map.of(
                     "summary", parsed.getOrDefault("summary", ""),
-                    "advice", parsed.getOrDefault("advice", ""),
-                    "risk", parsed.getOrDefault("risk", "")
+                    "top", parsed.getOrDefault("top", "shirt"),
+                    "bottom", parsed.getOrDefault("bottom", "pants"),
+                    "feet", parsed.getOrDefault("feet", "shoes")
             );
         } catch (Exception e) {
             return Map.of(
-                    "summary", content,
-                    "advice", "",
-                    "risk", "Unknown"
+                    "summary", "Failed to parse through json data.",
+                    "top", "",
+                    "bottom", "",
+                    "feet", ""
             );
         }
     }
