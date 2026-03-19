@@ -7,6 +7,7 @@ import MainCard from '../components/MainCard';
 function Homepage(){
 
     const [city, setCity] = useState("");
+    
 
     return(
         <>
