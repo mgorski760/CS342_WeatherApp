@@ -46,9 +46,9 @@ function MainCard({city, setCity}) {
     }, [city]);
 
     return (
-        <div className='border-4 border-gray-800 w-3/6 h-[500px] bg-gray-700 mx-auto text-white rounded-lg p-2'>
+        <div className='border-4 border-gray-800 w-5/6 h-full bg-gray-700 mx-auto text-white rounded-lg p-2'>
             <div className='flex flex-col md:flex-row sm:w-full h-full gap-2'>
-                <div className='border-4 border-gray-800 sm:w-full md:w-3/6 h-full bg-gray-800 flex flex-col gap-4 p-2 overflow-y-auto max-h-[60vh]'>
+                <div className='border-4 border-gray-800 sm:w-full md:w-2/3 h-full bg-gray-800 flex flex-col gap-4 p-2 overflow-y-auto'>
                     {loading ? (
                         <p className='text-center animate-pulse'>Loading weather data...</p>
                     ) : weather.length === 0 ? (
@@ -62,10 +62,10 @@ function MainCard({city, setCity}) {
                                         flex flex-col items-center sm:flex-row sm:items-center sm:justify-between
                                         gap-2 sm:gap-3
                                         w-full
-                                        border border-gray-700 rounded-l p-2 bg-gray-700 hover:bg-gray-800
+                                        border border-gray-700 rounded-l p-3 bg-gray-700 hover:bg-gray-800
                                         transition ease-out duration-700"
                             onClick={() => setDayPicked(period)}>
-                                <img src={period.icon} className='w-9 h-8 object-cover rounded'></img>
+                                <img src={period.icon} className='w-11 h-11 object-cover rounded'></img>
                                 <span className='text-center sm:text-left font medium break-words'>{period.name}</span>
                                 <span className='text-center sm:text-right break-words'>Day: {period.day}°{period.temperatureUnit} | Night: {period.night}°{period.temperatureUnit}</span>
 
@@ -81,7 +81,7 @@ function MainCard({city, setCity}) {
                         ) : weather.length === 0 ? (
                               <p className='w-full text-center text-gray-400 p-2'>Info not found. Try another search.</p>
                         ) : dayPicked ? (
-                            <div className='text-xs'>
+                            <div className='text-s'>
                                 <h2 className='text-xl font-bold underline underline-offset-4 decoration-4 decoration-green-500'>{dayPicked.name}</h2>
 
                                 <div className='flex flex-row items-start gap-3 pt-2'>
