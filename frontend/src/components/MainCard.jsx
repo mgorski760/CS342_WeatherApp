@@ -185,7 +185,7 @@ function MainCard({city, setCity}) {
                     </div>
 
                     <div className='border-4 border-gray-800 h-1/2 bg-gray-800 flex-row p-2 overflow-y-auto max-h-[60vh]'>
-                        <div id="windy" className="w-full h-full "></div>
+                        <div id="windy" className="w-full h-full windy-clean"></div>
                     </div>
                 </div>
             </div>

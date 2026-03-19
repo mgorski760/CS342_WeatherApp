@@ -7,3 +7,11 @@ html, body, #root {
     background-color: theme('colors.gray.900');
     overflow-x: hidden;
 }
+
+#windy.windy-clean .leaflet-top,
+#windy.windy-clean .leaflet-right,
+#windy.windy-clean .leaflet-control-zoom,
+#windy.windy-clean .leaflet-control-layers,
+#windy.windy-clean .leaflet-control-scale {
+  display: none !important;
+}
