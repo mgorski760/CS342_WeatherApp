@@ -208,6 +208,33 @@ public class WeatherController {
             );
         }
     }
+
+    @GetMapping("/getcoords/{city}")
+    public Map<String, Double> getCoords(@PathVariable String city){
+        RestTemplate restTemplate = new RestTemplate();
+        
+        String url = "https://photon.komoot.io/api/?q=" + city;
+        Map<String, Object> response = restTemplate.getForObject(url, Map.class);
+
+        List features = (List) response.get("features");
+
+        Map geometry = (Map) ((Map) features.get(0)).get("geometry");
+        
+        if(geometry == null) {
+            Map.of("lat", 50.4, "lon", 14.3);
+        }
+
+        List<Double> coordinates = (List<Double>) geometry.get("coordinates");
+        
+        if(coordinates == null || coordinates.size() < 2){
+            Map.of("lat", 50.4, "lon", 14.3);    
+        }
+
+        double longitude = coordinates.get(0);
+        double latitude = coordinates.get(1);
+
+        return Map.of("lat", latitude, "lon", longitude);
+    }
 }
 
 
