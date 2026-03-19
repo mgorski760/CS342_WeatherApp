@@ -8,7 +8,6 @@ import Radar from './pages/Radar'
 
 function App() {
 
-  
 
   return (
      <Routes>
