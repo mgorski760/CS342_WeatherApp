@@ -23,9 +23,9 @@ import java.time.LocalDate;
 public class WeatherController {
     @GetMapping("/{city}")
     public ArrayList<Period> getCords(@PathVariable String city) {
-        RestTemplate restTemplate = new RestTemplate();
+        RestTemplate restTemplate = new RestTemplate(); // used to send GET requests to the URL
         String url = "https://photon.komoot.io/api/?q=" + city;
-        Map<String, Object> response = restTemplate.getForObject(url, Map.class);
+        Map<String, Object> response = restTemplate.getForObject(url, Map.class); // returns all fields in map called response
         // Go into the list to access features
         List features = (List) response.get("features");
 
